@@ -43,24 +43,17 @@ helm repo add aqua https://aquasecurity.github.io/helm-charts/
 helm repo update
 ```
 
+Create a namespace for trivy:
+```
+kubectl create ns trivy-system
+```
+
 And finally, the Helm chart can be installed with the following command:
 
 ```
-helm install trivy-operator aqua/trivy-operator \
-  --namespace trivy-system \
-  --create-namespace \
-  --set="trivy.ignoreUnfixed=true" \
-  --version 0.1.3
+helm install trivy-operator aqua/trivy-operator --values trivy-values.yaml -n trivy system
 ```
 Make sure to cross-check the updated installation incl. the latest versio  of the operator in the docs: https://aquasecurity.github.io/trivy-operator/latest/operator/installation/helm/
-
-Install the Trivy exporter -- note that here we are still using the old Starboard exporter:
-
-```
-helm repo add giantswarm https://giantswarm.github.io/giantswarm-catalog
-helm repo update
-helm upgrade -i trivy-exporter --namespace <trivy namespace> giantswarm/starboard-exporter
-```
 
 Install tracee to monitor your cluster:
 
@@ -68,7 +61,7 @@ Install tracee to monitor your cluster:
 kubectl apply -f observability-conf/tracee.yaml
 ```
 
-Create application:
+Create an example application:
 ```
 kubectl create ns app
 kubectl apply -f app-manifests -n app
