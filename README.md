@@ -51,7 +51,7 @@ kubectl create ns trivy-system
 And finally, the Helm chart can be installed with the following command:
 
 ```
-helm install trivy-operator aqua/trivy-operator --values trivy-values.yaml -n trivy system
+helm install trivy-operator aqua/trivy-operator --values trivy-values.yaml -n trivy-system
 ```
 Make sure to cross-check the updated installation incl. the latest versio  of the operator in the docs: https://aquasecurity.github.io/trivy-operator/latest/operator/installation/helm/
 
